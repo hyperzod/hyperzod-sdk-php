@@ -85,14 +85,19 @@ class BaseHyperzodClient implements HyperzodClientInterface
 
    public function request($method, $path, $params)
    {
+      if (!isset($params['tenant_id']) || empty($params['tenant_id'])) {
+         throw new Exception("Tenant Id is required to access hyperzod's api's.");
+      }
+
       $client = new Client([
          'headers' => [
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'x-tenant' => $params['tenant_id']
          ]
       ]);
 
-      $params["apiKey"] = $this->getApiKey();
+      $params["apikey"] = $this->getApiKey();
 
       $api = $this->getApiBase() . $path;
       $response = $client->request($method, $api, [
