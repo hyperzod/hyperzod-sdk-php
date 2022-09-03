@@ -26,7 +26,7 @@ class BaseHyperzodClient implements HyperzodClientInterface
     * @param string $env the environment
     */
 
-   public function __construct($api_key, $env)
+   public function __construct($api_key, $env, $token = null)
    {
       $config = $this->validateConfig(array(
          "api_key" => $api_key,
@@ -41,6 +41,8 @@ class BaseHyperzodClient implements HyperzodClientInterface
       if ($config['env'] == EnvironmentEnum::PRODUCTION) {
          $config['api_base'] = self::PRODUCTION_API_BASE;
       }
+
+      $config['token'] = $token;
 
       $this->config = $config;
    }
@@ -76,6 +78,16 @@ class BaseHyperzodClient implements HyperzodClientInterface
    }
 
    /**
+    * Gets the token.
+    *
+    * @return string|null the token
+    */
+   public function getToken()
+   {
+      return $this->config['token'];
+   }
+
+   /**
     * Sends a request to Hyperzod's API.
     *
     * @param string $method the HTTP method
@@ -88,16 +100,23 @@ class BaseHyperzodClient implements HyperzodClientInterface
       if (!isset($params['tenant_id']) || empty($params['tenant_id'])) {
          throw new Exception("Tenant Id is required to access hyperzod's api's.");
       }
+      
+      $headers = [
+         'Content-Type' => 'application/json',
+         'Accept' => 'application/json',
+         'x-tenant' => $params['tenant_id']
+      ];
+
+      $token = $this->getToken();
+      if (!is_null($token)) {
+         $headers["Authorization"] = "Bearer " . $token;
+      } else {
+         $params["apikey"] = $this->getApiKey();
+      }
 
       $client = new Client([
-         'headers' => [
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json',
-            'x-tenant' => $params['tenant_id']
-         ]
+         'headers' => $headers
       ]);
-
-      $params["apikey"] = $this->getApiKey();
 
       $api = $this->getApiBase() . $path;
       $response = $client->request($method, $api, [
