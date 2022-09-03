@@ -6,6 +6,7 @@ namespace Hyperzod\HyperzodSdkPhp\Service;
  * Service factory class for API resources in the root namespace.
  *
  * @property OrderService $orderService
+ * @property AuthService $authService
  */
 class CoreServiceFactory extends AbstractServiceFactory
 {
@@ -14,6 +15,7 @@ class CoreServiceFactory extends AbstractServiceFactory
      */
     private static $classMap = [
         'order' => OrderService::class,
+        'auth' => AuthService::class,
     ];
 
     protected function getServiceClass($name)
