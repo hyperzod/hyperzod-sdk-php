@@ -31,4 +31,17 @@ class OrderService extends AbstractService
    {
       return $this->request(HttpMethodEnum::GET, '/admin/v1/order/status/order', $params);
    }
+
+   /**
+    * Add tracking URL
+    *
+    * @param array $params
+    *
+    * @throws \Hyperzod\HyperzodSdkPhp\Exception\ApiErrorException if the request fails
+    *
+    */
+   public function addTrackingUrl(array $params)
+   {
+      return $this->request(HttpMethodEnum::POST, '/admin/v1/order/addTrackingUrl', $params);
+   }
 }
