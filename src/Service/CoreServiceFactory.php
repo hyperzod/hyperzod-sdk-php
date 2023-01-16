@@ -7,6 +7,7 @@ namespace Hyperzod\HyperzodSdkPhp\Service;
  *
  * @property OrderService $orderService
  * @property AuthService $authService
+ * @property WebhookService $webhookService
  */
 class CoreServiceFactory extends AbstractServiceFactory
 {
@@ -16,6 +17,7 @@ class CoreServiceFactory extends AbstractServiceFactory
     private static $classMap = [
         'order' => OrderService::class,
         'auth' => AuthService::class,
+        'webhook' => WebhookService::class,
     ];
 
     protected function getServiceClass($name)
