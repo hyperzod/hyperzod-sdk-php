@@ -10,6 +10,15 @@ You can install the package via composer:
 composer require hyperzod/hyperzod-sdk-php
 ```
 
+## Usage
+
+You can use the sdk to call the Hyperzod API (Eg: Updating the order status).
+
+```php
+$client = HyperzodClient($api_key, $env, $token = null);
+$response = $client->order->updateOrderStatus($payload);
+```
+
 ### Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
@@ -24,8 +33,8 @@ If you discover any security related issues, please email siddiquiazam966@gmail.
 
 ## Credits
 
--   [Azam Siddiqui](https://github.com/siddiquiazam)
--   [All Contributors](../../contributors)
+- [Azam Siddiqui](https://github.com/siddiquiazam)
+- [All Contributors](../../contributors)
 
 ## License
 
