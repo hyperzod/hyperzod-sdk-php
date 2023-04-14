@@ -2,8 +2,8 @@
 
 namespace Hyperzod\HyperzodSdkPhp\Enums;
 
-class EnvironmentEnum extends BaseEnum
+enum EnvironmentEnum: string
 {
-   const DEV = 'dev';
-   const PRODUCTION = 'production';
+   case DEV = 'dev';
+   case PRODUCTION = 'production';
 }

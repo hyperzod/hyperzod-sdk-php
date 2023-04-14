@@ -14,5 +14,5 @@ interface HyperzodClientInterface extends BaseHyperzodClientInterface
     * @param string $path the path of the request
     * @param array $params the parameters of the request
     */
-   public function request($method, $path, $params);
+   public function request($method, $path, array $params = []);
 }

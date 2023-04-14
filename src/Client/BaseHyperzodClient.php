@@ -9,14 +9,14 @@ use Hyperzod\HyperzodSdkPhp\Exception\InvalidArgumentException;
 
 class BaseHyperzodClient implements HyperzodClientInterface
 {
-
-   /** @var string default base URL for Hyperzod's API */
    const DEV_API_BASE = 'https://api.hyperzod.dev';
-
    const PRODUCTION_API_BASE = 'https://api.hyperzod.app';
 
-   /** @var array<string, mixed> */
-   private $config;
+   protected string $api_base;
+   protected int $tenant_id;
+   protected string $api_key;
+   protected ?string $auth_token = null;
+   protected EnvironmentEnum $env;
 
    /**
     * Initializes a new instance of the {@link BaseHyperzodClient} class.
@@ -26,25 +26,18 @@ class BaseHyperzodClient implements HyperzodClientInterface
     * @param string $env the environment
     */
 
-   public function __construct($api_key, $env, $token = null)
+   public function __construct(int $tenant_id, bool $is_prod_env = true, string $api_key)
    {
-      $config = $this->validateConfig(array(
-         "api_key" => $api_key,
-         "env" => $env
-      ));
+      $this->tenant_id = $tenant_id;
 
-      //Set the base URL
-      if ($config['env'] == EnvironmentEnum::DEV) {
-         $config['api_base'] = self::DEV_API_BASE;
+      $this->api_key = $this->validateApiKey($api_key);
+
+      $this->env = EnvironmentEnum::DEV;
+      $this->api_base = self::DEV_API_BASE;
+      if ($is_prod_env) {
+         $this->env = EnvironmentEnum::PRODUCTION;
+         $this->api_base = self::PRODUCTION_API_BASE;
       }
-
-      if ($config['env'] == EnvironmentEnum::PRODUCTION) {
-         $config['api_base'] = self::PRODUCTION_API_BASE;
-      }
-
-      $config['token'] = $token;
-
-      $this->config = $config;
    }
 
    /**
@@ -54,7 +47,7 @@ class BaseHyperzodClient implements HyperzodClientInterface
     */
    public function getApiKey()
    {
-      return $this->config['api_key'];
+      return $this->api_key;
    }
 
    /**
@@ -64,7 +57,7 @@ class BaseHyperzodClient implements HyperzodClientInterface
     */
    public function getApiBase()
    {
-      return $this->config['api_base'];
+      return $this->api_base;
    }
 
    /**
@@ -74,7 +67,7 @@ class BaseHyperzodClient implements HyperzodClientInterface
     */
    public function getEnv()
    {
-      return $this->config['env'];
+      return $this->env;
    }
 
    /**
@@ -82,9 +75,20 @@ class BaseHyperzodClient implements HyperzodClientInterface
     *
     * @return string|null the token
     */
-   public function getToken()
+   public function getAuthToken()
    {
-      return $this->config['token'];
+      return $this->auth_token;
+   }
+
+   /**
+    * Sets the token.
+    *
+    * @param string|null $token the token
+    */
+
+   public function setAuthToken(string $token)
+   {
+      $this->auth_token = $token;
    }
 
    /**
@@ -95,21 +99,21 @@ class BaseHyperzodClient implements HyperzodClientInterface
     * @param array $params the parameters of the request
     */
 
-   public function request($method, $path, $params)
+   public function request($method, $path, array $params = [])
    {
-      if (!isset($params['tenant_id']) || empty($params['tenant_id'])) {
+      if (empty($this->tenant_id)) {
          throw new Exception("Tenant Id is required to access hyperzod's api's.");
       }
-      
+
       $headers = [
          'Content-Type' => 'application/json',
          'Accept' => 'application/json',
-         'x-tenant' => $params['tenant_id']
+         'x-tenant' => $this->tenant_id,
       ];
 
-      $token = $this->getToken();
-      if (!is_null($token)) {
-         $headers["Authorization"] = "Bearer " . $token;
+      $auth_token = $this->getAuthToken();
+      if (!is_null($auth_token)) {
+         $headers["Authorization"] = "Bearer " . $auth_token;
       } else {
          $params["apikey"] = $this->getApiKey();
       }
@@ -132,48 +136,27 @@ class BaseHyperzodClient implements HyperzodClientInterface
     *
     * @throws InvalidArgumentException
     */
-   private function validateConfig($config)
+   private function validateApiKey(string $api_key)
    {
       // api_key
-      if (!isset($config['api_key'])) {
+      if (!isset($api_key)) {
          throw new InvalidArgumentException('api_key field is required');
       }
 
-      if (!is_string($config['api_key'])) {
+      if (!is_string($api_key)) {
          throw new InvalidArgumentException('api_key must be a string');
       }
 
-      if ('' === $config['api_key']) {
+      if ('' === $api_key) {
          throw new InvalidArgumentException('api_key cannot be an empty string');
       }
 
-      if (preg_match('/\s/', $config['api_key'])) {
+      if (preg_match('/\s/', $api_key)) {
          throw new InvalidArgumentException('api_key cannot contain whitespace');
       }
 
-      // env
-      $all_envs = array_values((new EnvironmentEnum())->getConstants());
 
-      if (!isset($config['env'])) {
-         throw new InvalidArgumentException('env field is required');
-      }
-
-      if (!is_string($config['env'])) {
-         throw new InvalidArgumentException('env must be a string');
-      }
-
-      if ('' === $config['env']) {
-         throw new InvalidArgumentException('env cannot be an empty string');
-      }
-
-      if (!in_array($config['env'], $all_envs)) {
-         throw new InvalidArgumentException('Invalid env');
-      }
-
-      return [
-         "api_key" => $config['api_key'],
-         "env" => $config['env'],
-      ];
+      return $api_key;
    }
 
    private function validateResponse($response)
