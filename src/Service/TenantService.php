@@ -4,7 +4,7 @@ namespace Hyperzod\HyperzodSdkPhp\Service;
 
 use Hyperzod\HyperzodSdkPhp\Enums\HttpMethodEnum;
 
-class CatalogService extends AbstractService
+class TenantService extends AbstractService
 {
    public function listProducts(string $merchant_id = null, array $params = [])
    {
