@@ -6,12 +6,8 @@ use Hyperzod\HyperzodSdkPhp\Enums\HttpMethodEnum;
 
 class TenantService extends AbstractService
 {
-   public function listProducts(string $merchant_id = null, array $params = [])
+   public function tenantBranding()
    {
-      if ($merchant_id) {
-         $params['merchant_id'] = $merchant_id;
-      }
-
-      return $this->request(HttpMethodEnum::GET, '/admin/v1/catalog/product/list', $params);
+      return $this->request(HttpMethodEnum::GET, 'public/v1/tenant/branding');
    }
 }
