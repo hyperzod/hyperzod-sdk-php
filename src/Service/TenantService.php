@@ -8,6 +8,6 @@ class TenantService extends AbstractService
 {
    public function tenantBranding()
    {
-      return $this->request(HttpMethodEnum::GET, 'public/v1/tenant/branding');
+      return $this->request(HttpMethodEnum::GET, '/public/v1/tenant/branding');
    }
 }
