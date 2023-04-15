@@ -8,6 +8,6 @@ class MerchantService extends AbstractService
 {
    public function listMerchants(array $params = [])
    {
-      return $this->request(HttpMethodEnum::GET, '/admin/v1/merchant/listByIds', $params);
+      return $this->request(HttpMethodEnum::GET, '/admin/v1/merchant/list', $params);
    }
 }
