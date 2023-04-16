@@ -26,7 +26,7 @@ class BaseHyperzodClient implements HyperzodClientInterface
     * @param string $env the environment
     */
 
-   public function __construct(int $tenant_id, bool $is_prod_env = true, string $api_key)
+   public function __construct(int $tenant_id, string $api_key, bool $is_prod_env = true)
    {
       $this->tenant_id = $tenant_id;
 
