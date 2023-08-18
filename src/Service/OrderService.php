@@ -33,15 +33,15 @@ class OrderService extends AbstractService
    }
 
    /**
-    * Add tracking Data
+    * Add Delivery Provider Data
     *
     * @param array $params
     *
     * @throws \Hyperzod\HyperzodSdkPhp\Exception\ApiErrorException if the request fails
     *
     */
-   public function addTrackingData(array $params)
+   public function addDeliveryProviderData(array $params)
    {
-      return $this->request(HttpMethodEnum::POST, '/admin/v1/order/addTrackingData', $params);
+      return $this->request(HttpMethodEnum::POST, '/admin/v1/order/deliveryProvider', $params);
    }
 }
