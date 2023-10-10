@@ -100,10 +100,11 @@ class BaseHyperzodClient implements HyperzodClientInterface
       if (!isset($params['tenant_id']) || empty($params['tenant_id'])) {
          throw new Exception("Tenant Id is required to access hyperzod's api's.");
       }
-      
+
       $headers = [
          'Content-Type' => 'application/json',
          'Accept' => 'application/json',
+         'Origin' => config('app.url'),
          'x-tenant' => $params['tenant_id']
       ];
 
