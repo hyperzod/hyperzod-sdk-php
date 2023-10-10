@@ -18,6 +18,7 @@ class CoreServiceFactory extends AbstractServiceFactory
         'order' => OrderService::class,
         'auth' => AuthService::class,
         'webhook' => WebhookService::class,
+        'catalog' => CatalogService::class,
     ];
 
     protected function getServiceClass($name)
