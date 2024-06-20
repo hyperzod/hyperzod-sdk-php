@@ -9,6 +9,7 @@ namespace Hyperzod\HyperzodSdkPhp\Service;
  * @property AuthService $authService
  * @property WebhookService $webhookService
  * @property CatalogService $catalogService
+ * @property StatsService $statsService
  */
 class CoreServiceFactory extends AbstractServiceFactory
 {
@@ -20,6 +21,7 @@ class CoreServiceFactory extends AbstractServiceFactory
         'auth' => AuthService::class,
         'webhook' => WebhookService::class,
         'catalog' => CatalogService::class,
+        'stats' => StatsService::class,
     ];
 
     protected function getServiceClass($name)
