@@ -8,6 +8,7 @@ namespace Hyperzod\HyperzodSdkPhp\Service;
  * @property OrderService $orderService
  * @property AuthService $authService
  * @property WebhookService $webhookService
+ * @property CatalogService $catalogService
  */
 class CoreServiceFactory extends AbstractServiceFactory
 {
