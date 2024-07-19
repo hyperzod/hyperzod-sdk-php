@@ -18,4 +18,30 @@ class StatsService extends AbstractService
    {
       return $this->request(HttpMethodEnum::GET, '/admin/v1/stats/segments', $params);
    }
+
+   /**
+    * Get segment contact count
+    *
+    * @param array $params
+    *
+    * @throws \Hyperzod\HyperzodSdkPhp\Exception\ApiErrorException if the request fails
+    *
+    */
+   public function getSegmentContactCount(array $params)
+   {
+      return $this->request(HttpMethodEnum::GET, '/admin/v1/stats/segments/count', $params);
+   }
+
+   /**
+    * Execute segment
+    *
+    * @param array $params
+    *
+    * @throws \Hyperzod\HyperzodSdkPhp\Exception\ApiErrorException if the request fails
+    *
+    */
+   public function executeSegment(array $params)
+   {
+      return $this->request(HttpMethodEnum::GET, '/admin/v1/stats/segments/execute', $params);
+   }
 }
