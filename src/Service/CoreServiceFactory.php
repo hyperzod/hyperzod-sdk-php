@@ -11,6 +11,7 @@ namespace Hyperzod\HyperzodSdkPhp\Service;
  * @property CatalogService $catalogService
  * @property StatsService $statsService
  * @property TenantService $tenantService
+ * @property BillingService $billingService
  */
 class CoreServiceFactory extends AbstractServiceFactory
 {
@@ -24,6 +25,7 @@ class CoreServiceFactory extends AbstractServiceFactory
         'catalog' => CatalogService::class,
         'stats' => StatsService::class,
         'tenant' => TenantService::class,
+        'billing' => BillingService::class,
     ];
 
     protected function getServiceClass($name)
