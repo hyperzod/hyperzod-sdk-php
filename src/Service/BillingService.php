@@ -29,6 +29,6 @@ class BillingService extends AbstractService
     */
     public function verifyPayment(array $params)
     {
-        return $this->request(HttpMethodEnum::GET, '/admin/v1/billing/tenant/payment', $params);
+        return $this->request(HttpMethodEnum::GET, '/admin/v1/billing/tenant/payment/verify', $params);
     }
 }
