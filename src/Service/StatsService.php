@@ -33,6 +33,20 @@ class StatsService extends AbstractService
    }
 
    /**
+    * Get segment contact count by Country
+    *
+    * @param array $params
+    *
+    * @throws \Hyperzod\HyperzodSdkPhp\Exception\ApiErrorException if the request fails
+    *
+    */
+
+   public function getSegmentContactCountByCountry(array $params)
+   {
+      return $this->request(HttpMethodEnum::GET, '/admin/v1/stats/segments/count/country', $params);
+   }
+
+   /**
     * Execute segment
     *
     * @param array $params
