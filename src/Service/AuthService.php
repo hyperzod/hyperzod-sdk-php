@@ -18,4 +18,14 @@ class AuthService extends AbstractService
    {
       return $this->request(HttpMethodEnum::GET, '/auth/v1/me', $params);
    }
+
+   public function users(array $params)
+   {
+      return $this->request(HttpMethodEnum::GET, '/auth/v1/user/all', $params);
+   }
+
+   public function showUser(int $user_id, array $params)
+   {
+      return $this->request(HttpMethodEnum::GET, '/auth/v1/user/' . $user_id, $params);
+   }
 }
