@@ -20,6 +20,19 @@ class OrderService extends AbstractService
    }
 
    /**
+    * Fetch order
+    *
+    * @param array $params
+    *
+    * @throws \Hyperzod\HyperzodSdkPhp\Exception\ApiErrorException if the request fails
+    *  
+    */
+   public function fetchOrder(array $params)
+   {
+      return $this->request(HttpMethodEnum::GET, '/admin/v1/order', $params);
+   }
+
+   /**
     * List order status
     *
     * @param array $params
