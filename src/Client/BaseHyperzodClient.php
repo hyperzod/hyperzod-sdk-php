@@ -26,7 +26,7 @@ class BaseHyperzodClient implements HyperzodClientInterface
     * @param string $env the environment
     */
 
-   public function __construct($api_key, $env, $token = null)
+   public function __construct($api_key = null, $env, $token = null)
    {
       $config = $this->validateConfig(array(
          "api_key" => $api_key,
@@ -136,20 +136,22 @@ class BaseHyperzodClient implements HyperzodClientInterface
    private function validateConfig($config)
    {
       // api_key
-      if (!isset($config['api_key'])) {
-         throw new InvalidArgumentException('api_key field is required');
-      }
+      if (!empty($config['api_key'])) {
+         if (!isset($config['api_key'])) {
+            throw new InvalidArgumentException('api_key field is required');
+         }
 
-      if (!is_string($config['api_key'])) {
-         throw new InvalidArgumentException('api_key must be a string');
-      }
+         if (!is_string($config['api_key'])) {
+            throw new InvalidArgumentException('api_key must be a string');
+         }
 
-      if ('' === $config['api_key']) {
-         throw new InvalidArgumentException('api_key cannot be an empty string');
-      }
+         if ('' === $config['api_key']) {
+            throw new InvalidArgumentException('api_key cannot be an empty string');
+         }
 
-      if (preg_match('/\s/', $config['api_key'])) {
-         throw new InvalidArgumentException('api_key cannot contain whitespace');
+         if (preg_match('/\s/', $config['api_key'])) {
+            throw new InvalidArgumentException('api_key cannot contain whitespace');
+         }
       }
 
       // env
