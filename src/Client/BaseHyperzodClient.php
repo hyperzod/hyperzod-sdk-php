@@ -185,6 +185,11 @@ class BaseHyperzodClient implements HyperzodClientInterface
 
       if ($status_code >= 200 && $status_code < 300) {
          $response = json_decode($response->getBody(), true);
+
+         if ($response === 1) {
+            return true;
+         }
+
          if (isset($response["success"]) && boolval($response["success"])) {
             if (isset($response["data"])) {
                return $response["data"];
