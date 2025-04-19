@@ -18,4 +18,17 @@ class WebhookService extends AbstractService
    {
       return $this->request(HttpMethodEnum::POST, '/admin/v1/webhook/tenant/webhooks', $params);
    }
+
+   /**
+    * List webhooks
+    *
+    * @param array $params
+    *
+    * @throws \Hyperzod\HyperzodSdkPhp\Exception\ApiErrorException if the request fails
+    *
+    */
+   public function list(array $params)
+   {
+      return $this->request(HttpMethodEnum::GET, '/admin/v1/webhook/tenant/webhooks', $params);
+   }
 }
