@@ -58,4 +58,15 @@ class StatsService extends AbstractService
    {
       return $this->request(HttpMethodEnum::GET, '/admin/v1/stats/segments/execute', $params);
    }
+
+   /**
+     * Get user stats
+     *
+     *
+     * @throws \Hyperzod\HyperzodSdkPhp\Exception\ApiErrorException if the request fails
+     */
+    public function getUserStats(int $user_id, array $params)
+    {
+        return $this->request(HttpMethodEnum::GET, '/admin/v1/stats/users/'.$user_id, $params);
+    }
 }
