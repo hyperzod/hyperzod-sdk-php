@@ -28,6 +28,7 @@ class CoreServiceFactory extends AbstractServiceFactory
         'tenant' => TenantService::class,
         'billing' => BillingService::class,
         'notification' => NotificationService::class,
+        'merchant' => MerchantService::class,
     ];
 
     protected function getServiceClass($name)
