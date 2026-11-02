@@ -26,7 +26,7 @@ class BaseHyperzodClient implements HyperzodClientInterface
     * @param string $env the environment
     */
 
-   public function __construct($api_key = null, $env, $token = null)
+   public function __construct($api_key, $env, $token = null)
    {
       $config = $this->validateConfig(array(
          "api_key" => $api_key,
