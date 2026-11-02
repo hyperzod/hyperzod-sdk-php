@@ -6,7 +6,7 @@ use Hyperzod\HyperzodSdkPhp\Enums\HttpMethodEnum;
 
 class CatalogService extends AbstractService
 {
-   public function listProducts(string $merchant_id = null)
+   public function listProducts(?string $merchant_id = null)
    {
       $params = [];
 
